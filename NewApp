@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Interview Prep</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .mode-selector {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .mode-btn {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e0e7ff;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            color: #667eea;
+            transition: all 0.3s;
+        }
+
+        .mode-btn:hover {
+            background: #f5f7ff;
+        }
+
+        .mode-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e7ff;
+            border-radius: 8px;
+            font-size: 1em;
+            font-family: inherit;
+            margin-bottom: 15px;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+
+        .questions-container {
+            margin-top: 30px;
+        }
+
+        .question-card {
+            background: #f8fafc;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        .question-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .question-card .question-text {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #1e293b;
+        }
+
+        .answer-area {
+            margin-top: 15px;
+        }
+
+        .answer-toggle {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .answer-toggle:hover {
+            background: #5568d3;
+        }
+
+        .sample-answer {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 10px;
+            display: none;
+            border: 1px solid #e0e7ff;
+        }
+
+        .sample-answer.visible {
+            display: block;
+        }
+
+        .stage-badge {
+            display: inline-block;
+            background: #fbbf24;
+            color: #78350f;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .info {
+            background: #dbeafe;
+            border: 1px solid #3b82f6;
+            color: #1e40af;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .info strong {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .helper-text {
+            background: #fef3c7;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        .copy-btn {
+            background: #10b981;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .copy-btn:hover {
+            background: #059669;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 AI Interview Prep</h1>
+            <p>Practice with AI-generated questions tailored to your role</p>
+        </div>
+
+        <div class="content">
+            <div class="mode-selector">
+                <button class="mode-btn active" onclick="switchMode('generate')">Generate Questions (Free Test)</button>
+                <button class="mode-btn" onclick="switchMode('practice')">Practice Mode</button>
+            </div>
+
+            <!-- Generate Mode -->
+            <div id="generateMode" class="section active">
+                <div class="info">
+                    <strong>🎓 Free Test Mode - How This Works:</strong>
+                    1. Fill in your job description and resume below<br>
+                    2. Click "Copy Prompt for Claude"<br>
+                    3. Go to <a href="https://claude.ai" target="_blank" style="color: #667eea;">claude.ai</a> (completely free)<br>
+                    4. Paste the prompt there and get your questions<br>
+                    5. Copy the questions back here and practice!
+                </div>
+
+                <div class="section">
+                    <label for="jobDescription">Job Description</label>
+                    <textarea id="jobDescription" placeholder="Paste the full job description here..."></textarea>
+                </div>
+
+                <div class="section">
+                    <label for="resume">Your Resume</label>
+                    <textarea id="resume" placeholder="Paste your resume here..."></textarea>
+                </div>
+
+                <div class="section">
+                    <label for="stage">Interview Stage</label>
+                    <select id="stage">
+                        <option value="screening">Initial Screening (Recruiter)</option>
+                        <option value="technical">Technical Interview</option>
+                        <option value="hiring_manager">Hiring Manager Interview</option>
+                        <option value="team">Team Interview</option>
+                        <option value="executive">Executive/Final Interview</option>
+                        <option value="panel">Panel Interview</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-primary" onclick="generatePrompt()">
+                    📋 Copy Prompt for Claude.ai
+                </button>
+
+                <div id="promptOutput" style="display: none; margin-top: 20px;">
+                    <div class="helper-text">
+                        ✅ <strong>Prompt copied to clipboard!</strong><br>
+                        Now: Open <a href="https://claude.ai" target="_blank" style="color: #667eea;">claude.ai</a> in a new tab, paste this, and copy the response back here.
+                    </div>
+                </div>
+
+                <div class="section" style="display: block; margin-top: 30px;">
+                    <label for="aiResponse">Paste Claude's Response Here</label>
+                    <textarea id="aiResponse" placeholder="After you get questions from claude.ai, paste them here..." style="min-height: 200px;"></textarea>
+                    <button class="btn btn-primary" onclick="loadQuestions()">
+                        Load Questions for Practice
+                    </button>
+                </div>
+            </div>
+
+            <!-- Practice Mode -->
+            <div id="practiceMode" class="section">
+                <div class="info">
+                    <strong>🎯 Practice Mode:</strong>
+                    Your generated questions will appear here. Practice answering them, then reveal sample answers and tips.
+                </div>
+                <div id="questionsContainer" class="questions-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentMode = 'generate';
+        let questions = [];
+
+        const stageDescriptions = {
+            screening: "Initial screening with recruiter - focused on background, interest, and basic qualifications",
+            technical: "Technical deep-dive - skills assessment, problem-solving, and domain expertise",
+            hiring_manager: "Hiring manager conversation - role expectations, leadership style, and cultural fit",
+            team: "Meeting potential teammates - collaboration style, work approach, and team dynamics",
+            executive: "Executive/final round - strategic thinking, company alignment, and long-term vision",
+            panel: "Panel interview - diverse perspectives, handling multiple stakeholders, comprehensive assessment"
+        };
+
+        function switchMode(mode) {
+            currentMode = mode;
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            document.getElementById('generateMode').classList.remove('active');
+            document.getElementById('practiceMode').classList.remove('active');
+            
+            if (mode === 'generate') {
+                document.getElementById('generateMode').classList.add('active');
+            } else {
+                document.getElementById('practiceMode').classList.add('active');
+            }
+        }
+
+        function generatePrompt() {
+            const jobDescription = document.getElementById('jobDescription').value.trim();
+            const resume = document.getElementById('resume').value.trim();
+            const stage = document.getElementById('stage').value;
+
+            if (!jobDescription || !resume) {
+                alert('Please fill in both job description and resume');
+                return;
+            }
+
+            const stageName = document.getElementById('stage').options[document.getElementById('stage').selectedIndex].text;
+
+            const prompt = `You are an expert interview coach. Based on the following job description and candidate resume, generate 8-10 realistic interview questions for a ${stage.replace('_', ' ')} interview stage.
+
+Job Description:
+${jobDescription}
+
+Candidate Resume:
+${resume}
+
+Interview Stage Context: ${stageDescriptions[stage]}
+
+Generate questions that:
+1. Are specific to this role and company
+2. Are appropriate for the ${stage.replace('_', ' ')} stage
+3. Test relevant skills and experience from the resume
+4. Range from behavioral to technical/strategic as appropriate
+5. Include some challenging questions that require thoughtful answers
+
+For each question, also provide:
+- A brief explanation of why this question matters
+- Key points a strong answer should include
+- A sample strong answer (2-3 paragraphs)
+
+Format your response as a JSON array of objects with this structure:
+[
+  {
+    "question": "The interview question",
+    "why": "Why this question is being asked",
+    "keyPoints": ["point 1", "point 2", "point 3"],
+    "sampleAnswer": "A detailed sample answer"
+  }
+]
+
+Return ONLY the JSON array, no other text.`;
+
+            navigator.clipboard.writeText(prompt).then(() => {
+                document.getElementById('promptOutput').style.display = 'block';
+            }).catch(() => {
+                alert('Failed to copy. Please manually copy the prompt below:\n\n' + prompt);
+            });
+        }
+
+        function loadQuestions() {
+            const response = document.getElementById('aiResponse').value.trim();
+            
+            if (!response) {
+                alert('Please paste Claude\'s response first');
+                return;
+            }
+
+            try {
+                const cleanedResponse = response.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+                questions = JSON.parse(cleanedResponse);
+                
+                displayQuestions(questions);
+                switchMode('practice');
+                document.querySelectorAll('.mode-btn')[1].click();
+            } catch (error) {
+                alert('Error parsing response. Make sure you copied the entire JSON array from Claude.');
+            }
+        }
+
+        function displayQuestions(questions) {
+            const container = document.getElementById('questionsContainer');
+            const stageName = document.getElementById('stage').options[document.getElementById('stage').selectedIndex].text;
+            
+            let html = `<h2 style="color: #667eea; margin-bottom: 20px;">Interview Questions - ${stageName}</h2>`;
+            
+            questions.forEach((q, index) => {
+                html += `
+                    <div class="question-card">
+                        <span class="stage-badge">${stageName}</span>
+                        <h3>Question ${index + 1}</h3>
+                        <div class="question-text">${q.question}</div>
+                        
+                        <div style="background: #e0e7ff; padding: 12px; border-radius: 6px; margin-bottom: 10px; font-size: 0.9em;">
+                            <strong>Why this matters:</strong> ${q.why}
+                        </div>
+
+                        <div class="answer-area">
+                            <button class="answer-toggle" onclick="toggleAnswer(${index})">
+                                Show Sample Answer & Tips
+                            </button>
+                            <div class="sample-answer" id="answer-${index}">
+                                <h4 style="color: #667eea; margin-bottom: 10px;">Key Points to Cover:</h4>
+                                <ul style="margin-left: 20px; margin-bottom: 15px; line-height: 1.6;">
+                                    ${q.keyPoints.map(point => `<li>${point}</li>`).join('')}
+                                </ul>
+                                <h4 style="color: #667eea; margin-bottom: 10px;">Sample Strong Answer:</h4>
+                                <p style="line-height: 1.6; color: #1e293b;">${q.sampleAnswer}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += `
+                <button class="btn btn-primary" onclick="backToGenerate()" style="margin-top: 20px;">
+                    Generate New Set of Questions
+                </button>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        function toggleAnswer(index) {
+            const answer = document.getElementById(`answer-${index}`);
+            answer.classList.toggle('visible');
+        }
+
+        function backToGenerate() {
+            document.querySelectorAll('.mode-btn')[0].click();
+        }
+    </script>
+</body>
+</html>
