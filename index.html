@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+html<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -79,11 +79,10 @@
 
         .section {
             margin-bottom: 30px;
-            display: none;
         }
 
-        .section.active {
-            display: block;
+        .section.hidden {
+            display: none;
         }
 
         .section h2 {
@@ -230,21 +229,6 @@
             font-size: 0.9em;
             line-height: 1.6;
         }
-
-        .copy-btn {
-            background: #10b981;
-            color: white;
-            padding: 8px 16px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.9em;
-            margin-top: 10px;
-        }
-
-        .copy-btn:hover {
-            background: #059669;
-        }
     </style>
 </head>
 <body>
@@ -261,7 +245,7 @@
             </div>
 
             <!-- Generate Mode -->
-            <div id="generateMode" class="section active">
+            <div id="generateMode" class="section">
                 <div class="info">
                     <strong>🎓 Free Test Mode - How This Works:</strong>
                     1. Fill in your job description and resume below<br>
@@ -304,7 +288,7 @@
                     </div>
                 </div>
 
-                <div class="section" style="display: block; margin-top: 30px;">
+                <div class="section" style="margin-top: 30px;">
                     <label for="aiResponse">Paste Claude's Response Here</label>
                     <textarea id="aiResponse" placeholder="After you get questions from claude.ai, paste them here..." style="min-height: 200px;"></textarea>
                     <button class="btn btn-primary" onclick="loadQuestions()">
@@ -314,7 +298,7 @@
             </div>
 
             <!-- Practice Mode -->
-            <div id="practiceMode" class="section">
+            <div id="practiceMode" class="section hidden">
                 <div class="info">
                     <strong>🎯 Practice Mode:</strong>
                     Your generated questions will appear here. Practice answering them, then reveal sample answers and tips.
@@ -342,14 +326,8 @@
             document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
             
-            document.getElementById('generateMode').classList.remove('active');
-            document.getElementById('practiceMode').classList.remove('active');
-            
-            if (mode === 'generate') {
-                document.getElementById('generateMode').classList.add('active');
-            } else {
-                document.getElementById('practiceMode').classList.add('active');
-            }
+            document.getElementById('generateMode').classList.toggle('hidden', mode !== 'generate');
+            document.getElementById('practiceMode').classList.toggle('hidden', mode !== 'practice');
         }
 
         function generatePrompt() {
@@ -361,8 +339,6 @@
                 alert('Please fill in both job description and resume');
                 return;
             }
-
-            const stageName = document.getElementById('stage').options[document.getElementById('stage').selectedIndex].text;
 
             const prompt = `You are an expert interview coach. Based on the following job description and candidate resume, generate 8-10 realistic interview questions for a ${stage.replace('_', ' ')} interview stage.
 
@@ -401,7 +377,7 @@ Return ONLY the JSON array, no other text.`;
             navigator.clipboard.writeText(prompt).then(() => {
                 document.getElementById('promptOutput').style.display = 'block';
             }).catch(() => {
-                alert('Failed to copy. Please manually copy the prompt below:\n\n' + prompt);
+                alert('Failed to copy. Please manually copy the prompt.');
             });
         }
 
